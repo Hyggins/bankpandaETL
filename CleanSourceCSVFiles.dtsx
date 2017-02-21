@@ -1,0 +1,556 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/19/2014 8:11:57 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="CET64512"
+  DTS:CreatorName="CETO\glovern"
+  DTS:DTSID="{7227DD4F-C862-46B2-9FC1-6544F0B33481}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="13.0.4001.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="CleanSourceCSVFiles"
+  DTS:PackageType="5"
+  DTS:VersionBuild="73"
+  DTS:VersionGUID="{EFF49952-5551-4F15-A711-46F40594A608}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Cleaned Destination File Connection Manager]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{40E4078A-4263-4696-AD9E-FB19558D36F9}"
+      DTS:ObjectName="Cleaned Destination File Connection Manager">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::DestinationFQfilepath]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="S:\temp\Inbox\TA.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="8000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Column 0"
+              DTS:DTSID="{993C95BE-BE01-40FF-87C4-798A4FD4DCE0}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source File Connection Manager]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{CBD9E868-EC44-42B5-8292-F8D07DD7C5FC}"
+      DTS:ObjectName="Source File Connection Manager">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::FQfilepath]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowsToSkip="5"
+          DTS:HeaderRowDelimiter="_x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="s:\temp\TA .csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000A_"
+              DTS:MaximumWidth="8000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Column0"
+              DTS:DTSID="{692CA403-414E-447D-B322-92A378655F0F}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7979F7C6-74AC-4FB0-809F-BCB3B6591DC7}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::ForeachFolder] + &quot;\\Inbox&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationFolder">
+      <DTS:VariableValue
+        DTS:DataType="8">S:\temp\Inbox</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EADB94A8-3F59-429E-A97E-848E14F9167D}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="REPLACE(REPLACE(@[User::DestinationFolder] + &quot;\\&quot; + REPLACE(REVERSE(SUBSTRING(REVERSE(@[User::FQfilepath]), 1, FINDSTRING(REVERSE(@[User::FQfilepath]),&quot;\\&quot;,  1) - 1)),&quot; &quot;, &quot;&quot;), &quot;&amp;&quot;, &quot;&quot;), &quot;Â&quot;, &quot;&quot;)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DestinationFQfilepath">
+      <DTS:VariableValue
+        DTS:DataType="8">S:\temp\Inbox\TA.csv</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6B1B0551-612F-49A5-85E8-58D1C560995A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ForeachFolder">
+      <DTS:VariableValue
+        DTS:DataType="8">S:\temp</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DFE618D8-A6E6-4D44-B65F-B95FEB61DEF5}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FQfilepath">
+      <DTS:VariableValue
+        DTS:DataType="8">s:\temp\TA .csv</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Foreach CSV file"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{937F5693-0E52-4BDE-ADB5-808D7D01B01A}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach CSV file">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{5F7824AA-667D-4269-8575-E846EA42F4E5}"
+        DTS:ObjectName="{5F7824AA-667D-4269-8575-E846EA42F4E5}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[User::ForeachFolder]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="S:\temp" />
+            <FEFEProperty
+              FileSpec="*.csv" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach CSV file\Data Flow Task"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{7335D872-0409-4868-9068-FDBC97F1DE00}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Data Flow Task"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Foreach CSV file\Data Flow Task\CSV File"
+                  componentClassID="Microsoft.FlatFileSource"
+                  contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Flat File Source"
+                  localeId="1033"
+                  name="CSV File"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether zero-length columns are treated as null."
+                      name="RetainNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                      name="FileNameColumnName"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Foreach CSV file\Data Flow Task\CSV File.Connections[FlatFileConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Source File Connection Manager]"
+                      connectionManagerRefId="Package.ConnectionManagers[Source File Connection Manager]"
+                      name="FlatFileConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Output]"
+                      name="Flat File Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Output].Columns[Column0]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Output].ExternalColumns[Column0]"
+                          length="8000"
+                          lineageId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Output].Columns[Column0]"
+                          name="Column0"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Output].ExternalColumns[Column0]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8000"
+                          name="Column0" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Error Output]"
+                      isErrorOut="true"
+                      name="Flat File Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                          codePage="1252"
+                          dataType="text"
+                          description="Flat File Source Error Output Column"
+                          lineageId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                          name="Flat File Source Error Output Column" />
+                        <outputColumn
+                          refId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Foreach CSV file\Data Flow Task\Flat File Destination"
+                  componentClassID="Microsoft.FlatFileDestination"
+                  contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Flat File Destination"
+                  localeId="1033"
+                  name="Flat File Destination">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether the data will overwrite or append to the destination file."
+                      name="Overwrite">true</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the text to write to the destination file before any data is written."
+                      expressionType="Notify"
+                      name="Header" />
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Foreach CSV file\Data Flow Task\Flat File Destination.Connections[FlatFileConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Cleaned Destination File Connection Manager]"
+                      connectionManagerRefId="Package.ConnectionManagers[Cleaned Destination File Connection Manager]"
+                      name="FlatFileConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Foreach CSV file\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input]"
+                      hasSideEffects="true"
+                      name="Flat File Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Foreach CSV file\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].Columns[Column0]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="8000"
+                          cachedName="Column0"
+                          externalMetadataColumnId="Package\Foreach CSV file\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 0]"
+                          lineageId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Output].Columns[Column0]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Foreach CSV file\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[Column 0]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8000"
+                          name="Column 0" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                </component>
+                <component
+                  refId="Package\Foreach CSV file\Data Flow Task\Remove blank rows"
+                  componentClassID="Microsoft.ConditionalSplit"
+                  contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+                  name="Remove blank rows"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Inputs[Conditional Split Input]"
+                      description="Input to the Conditional Split Transformation"
+                      name="Conditional Split Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Inputs[Conditional Split Input].Columns[Column0]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="8000"
+                          cachedName="Column0"
+                          lineageId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Output].Columns[Column0]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Outputs[Invalid Rows]"
+                      description="Output 1 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="Invalid Rows"
+                      synchronousInputId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression">[LEN]([TRIM](#{Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Output].Columns[Column0]})) == 0</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression">LEN(TRIM(Column0)) == 0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">0</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Outputs[Valid Data Rows]"
+                      description="Default Output of the Conditional Split Transformation"
+                      exclusionGroup="1"
+                      name="Valid Data Rows"
+                      synchronousInputId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Inputs[Conditional Split Input]">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          name="IsDefaultOut">true</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Outputs[Conditional Split Error Output]"
+                      description="Error Output of the Conditional Split Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Conditional Split Error Output"
+                      synchronousInputId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Inputs[Conditional Split Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Foreach CSV file\Data Flow Task.Paths[Flat File Source Output]"
+                  endId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Inputs[Conditional Split Input]"
+                  name="Flat File Source Output"
+                  startId="Package\Foreach CSV file\Data Flow Task\CSV File.Outputs[Flat File Source Output]" />
+                <path
+                  refId="Package\Foreach CSV file\Data Flow Task.Paths[Valid Data Rows]"
+                  endId="Package\Foreach CSV file\Data Flow Task\Flat File Destination.Inputs[Flat File Destination Input]"
+                  name="Valid Data Rows"
+                  startId="Package\Foreach CSV file\Data Flow Task\Remove blank rows.Outputs[Valid Data Rows]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{2308BFB3-C278-4632-8128-59D3FCFC3A6D}"
+          DTS:ObjectName="{2308BFB3-C278-4632-8128-59D3FCFC3A6D}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::FQfilepath" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Foreach CSV file\Data Flow Task"
+          TopLeft="50,30" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="252,124"
+          Size="252,167"
+          Id="Package\Foreach CSV file"
+          TopLeft="223,184" />
+        <AnnotationLayout
+          Text="&quot;ForeachFolder&quot; is the only Variable we have to populate.&#xA;The other two update themselves."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="331,56"
+          Id="cc6f73d0-ffa9-4197-9923-7621d5e0571f"
+          TopLeft="179,385" />
+        <AnnotationLayout
+          Text="Order of Opererations:&#xA;&#xA;1. CleanSourceCSVFiles&#xA;2. BuildStagingTables&#xA;3. CreatePackage"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="151,104"
+          Id="069bfecf-c204-4fa4-a646-bfd1da49d776"
+          TopLeft="40,196" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Foreach CSV file\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph" xmlns:mssge="clr-namespace:Microsoft.SqlServer.Graph.Extended;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Foreach CSV file\Data Flow Task\Remove blank rows"
+          TopLeft="247,154" />
+        <NodeLayout
+          Size="117,42"
+          Id="Package\Foreach CSV file\Data Flow Task\CSV File"
+          TopLeft="275,70" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Foreach CSV file\Data Flow Task\Flat File Destination"
+          TopLeft="246,259" />
+        <EdgeLayout
+          Id="Package\Foreach CSV file\Data Flow Task.Paths[Flat File Source Output]"
+          TopLeft="333,112">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach CSV file\Data Flow Task.Paths[Valid Data Rows]"
+          TopLeft="332.25,196">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,63"
+              Start="0,0"
+              End="0,55.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-36.79076171875,22.87548828125,73.5815234375,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Order of Opererations:&#xA;&#xA;1. CleanSourceCSVFiles&#xA;2. BuildStagingTables&#xA;3. CreatePackage"
+          ParentId="Package\Foreach CSV file\Data Flow Task"
+          Size="214,119"
+          Id="5860e0cb-bfa5-472d-9cc6-a30e8bcfaf57"
+          TopLeft="17,44">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="15.75"
+              Color="#FF000000"
+              Weight="Bold">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
